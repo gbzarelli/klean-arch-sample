@@ -1,0 +1,8 @@
+group 'br.com.helpdev'
+version '0.0.1'
+
+dependencies {
+    compile project(":application:core")
+    implementation libs.spring
+    testImplementation libs.unit_test
+}
