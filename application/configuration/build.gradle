@@ -1,5 +1,19 @@
-group 'br.com.helpdev'
-version '0.0.1'
+//https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/#getting-started
+plugins {
+    id("org.springframework.boot") version "2.1.7.RELEASE"
+}
+apply plugin: "io.spring.dependency-management"
+
+bootJar {
+    archiveFileName = "${rootProject.name}-${rootProject.version}.${archiveExtension.get()}"
+}
+
+task copyBootJar(type: Copy) {
+    from bootJar
+    into rootProject.buildDir
+}
+
+compileJava.finalizedBy copyBootJar
 
 dependencies {
     compile project(":application:core")
