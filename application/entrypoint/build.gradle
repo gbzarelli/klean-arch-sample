@@ -1,0 +1,9 @@
+description = "Ways to interact with the application (e.g. Rest APIs, Jobs, GUIs, etc.)"
+
+dependencies {
+    implementation project(":application:core")
+
+    implementation libs.rest
+    implementation libs.log
+    testImplementation libs.unit_test
+}

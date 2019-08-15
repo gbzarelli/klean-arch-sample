@@ -1,22 +1,33 @@
-//https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/#getting-started
 plugins {
     id("org.springframework.boot") version "2.1.7.RELEASE"
+    id("io.spring.dependency-management") version "1.0.8.RELEASE"
 }
-apply plugin: "io.spring.dependency-management"
 
+description = "Wires the application together."
+
+//Generate jar with other name
 bootJar {
     archiveFileName = "${rootProject.name}-${rootProject.version}.${archiveExtension.get()}"
 }
 
+//task to copy jar to root build dir
 task copyBootJar(type: Copy) {
     from bootJar
     into rootProject.buildDir
 }
 
+//Execute copy after compile
 compileJava.finalizedBy copyBootJar
 
 dependencies {
-    compile project(":application:core")
+    implementation project(":application:core")
+    implementation project(":application:dataprovider")
+    implementation project(":application:entrypoint")
+
     implementation libs.spring
+    implementation libs.log
     testImplementation libs.unit_test
 }
+
+//Refs:
+//https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/#getting-started

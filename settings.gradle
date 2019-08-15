@@ -1,5 +1,7 @@
 rootProject.name = 'klean-arch-sample'
 
-include "application:configuration"
 include "application:core"
+include "application:configuration"
+include "application:dataprovider"
+include "application:entrypoint"
 

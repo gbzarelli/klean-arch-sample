@@ -1,5 +1,4 @@
-group 'br.com.helpdev'
-version '0.0.1'
+description = "Entities (domain objects) and uses cases that implement the business logic"
 
 dependencies {
     testImplementation libs.unit_test

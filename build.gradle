@@ -31,10 +31,18 @@ subprojects {
                         "org.junit.jupiter:junit-jupiter-params:${versions.junit}",
                         "org.junit.jupiter:junit-jupiter-engine:${versions.junit}"
                 ],
-                spring   : [
-                        "org.springframework.boot:spring-boot-starter-web:${versions.spring}",
-                        "org.springframework.boot:spring-boot-starter-logging:${versions.spring}",
+                log      : [
+                        "org.springframework.boot:spring-boot-starter-logging:${versions.spring}"
                 ],
+                spring   : [
+                        "org.springframework.boot:spring-boot-starter:${versions.spring}",
+                ],
+                rest     : [
+                        "org.springframework.boot:spring-boot-starter-web:${versions.spring}",
+                ],
+                database : [
+                        "org.springframework.boot:spring-boot-starter-data-jpa:${versions.spring}"
+                ]
         ]
     }
 }
