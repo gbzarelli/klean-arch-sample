@@ -1,8 +1,10 @@
+//https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/#getting-started
 plugins {
     id("org.springframework.boot") version "2.1.7.RELEASE"
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
 }
 
+version = rootProject.version
 description = "Wires the application together."
 
 //Generate jar with other name
@@ -19,6 +21,15 @@ task copyBootJar(type: Copy) {
 //Execute copy after compile
 compileJava.finalizedBy copyBootJar
 
+//Automatic Property Expansion Using Gradle
+// (https://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html)
+processResources {
+    filesMatching("application.yml") {
+        expand(project.properties)
+    }
+}
+
+
 dependencies {
     implementation project(":application:core")
     implementation project(":application:dataprovider")
@@ -28,6 +39,3 @@ dependencies {
     implementation libs.log
     testImplementation libs.unit_test
 }
-
-//Refs:
-//https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/#getting-started
