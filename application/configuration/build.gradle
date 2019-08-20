@@ -25,7 +25,7 @@ compileJava.finalizedBy copyBootJar
 // (https://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html)
 processResources {
     filesMatching("application.yml") {
-        expand(project.properties)
+        expand('project': project.properties)
     }
 }
 

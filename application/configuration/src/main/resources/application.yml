@@ -1,3 +1,8 @@
+server:
+  port: 8080
 
 application:
-  version: ${version}
+  version: ${project.version}
+
+foo:
+  bar: \${server.port}

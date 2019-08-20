@@ -12,8 +12,11 @@ class HomeRestController {
     @Value("\${application.version}")
     lateinit var version: String
 
+    @Value("\${foo.bar}")
+    lateinit var bar: String
+
     @GetMapping
     fun helloWorld(): String {
-        return "Hello world - $version"
+        return "Hello world - $version - $bar"
     }
 }
