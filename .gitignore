@@ -1,12 +1,6 @@
 # Log file
 *.log
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
 # Package Files #
 *.jar
 *.war
@@ -21,8 +15,10 @@ hs_err_pid*
 
 ### Gradle template
 .gradle
-build/
+!gradle-wrapper.jar
 
 # IntelliJ
 .idea
+out/
+build/
 

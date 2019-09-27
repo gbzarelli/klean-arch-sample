@@ -3,13 +3,13 @@ plugins {
     id("org.springframework.boot") version "2.1.7.RELEASE"
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
 }
+apply plugin: 'war'
 
-version = rootProject.version
 description = "Wires the application together."
 
 //Generate jar with other name
 bootJar {
-    archiveFileName = "${rootProject.name}-${rootProject.version}.${archiveExtension.get()}"
+    archiveFileName = "${rootProject.ext.archive_file_name}"
 }
 
 //task to copy jar to root build dir
@@ -21,6 +21,23 @@ task copyBootJar(type: Copy) {
 //Execute copy after compile
 compileJava.finalizedBy copyBootJar
 
+/**
+
+// For using WAR - Remember to change the variable `ext.archive_extension` in root build.gradle
+
+ bootWar {
+      archiveFileName = "${rootProject.ext.archive_file_name}"
+ }
+
+ task copyBootWar(type: Copy) {
+      from bootWar
+      into rootProject.buildDir
+ }
+
+  compileJava.finalizedBy copyBootWar
+ */
+
+
 //Automatic Property Expansion Using Gradle
 // (https://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html)
 processResources {
@@ -30,12 +47,27 @@ processResources {
 }
 
 
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    'br/com/helpdev/kleanarch/Application**',
+                    'br/com/helpdev/kleanarch/ServletInitializer**'
+            ])
+        })
+    }
+}
+
 dependencies {
     implementation project(":application:core")
     implementation project(":application:dataprovider")
     implementation project(":application:entrypoint")
 
-    implementation libs.spring
+    implementation libs.database
+    implementation libs.spring_config
+    implementation libs.cacheable
     implementation libs.log
+
+    testImplementation libs.spring_test
     testImplementation libs.unit_test
 }

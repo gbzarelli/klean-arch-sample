@@ -1,8 +1,38 @@
 server:
-  port: 8080
+  port: 9999
 
 application:
   version: ${project.version}
+  name: ${project.name}
+  description: ${project.description}
+  artifact-id: ${project.artifactId}
 
-foo:
-  bar: \${server.port}
+spring:
+  profiles:
+    active: default
+
+  datasource:
+    url: jdbc:h2:nio:./db/project_sample_db;MODE=MySQL
+    username: root
+    password: 123456
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterAccess=3600s
+
+  flyway:
+    url: \${spring.datasource.url}
+    user: \${spring.datasource.username}
+    password: \${spring.datasource.password}
+    baseline-on-migrate: true
+    validate-on-migrate: false
+    enabled: true

@@ -1,4 +1,4 @@
-package br.com.helpdev.kleanarch.rest
+package br.com.helpdev.kleanarch.entrypoint
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.GetMapping
@@ -12,11 +12,11 @@ class HomeRestController {
     @Value("\${application.version}")
     lateinit var version: String
 
-    @Value("\${foo.bar}")
-    lateinit var bar: String
+    @Value("\${application.name}")
+    lateinit var name: String
 
     @GetMapping
     fun helloWorld(): String {
-        return "Hello world - $version - $bar"
+        return "Hello world :: $name :: ($version)"
     }
 }

@@ -12,7 +12,7 @@ Using `Kotlin` and `Gradle` to build
 ```
 * running the application (from the jar, after having built it):
 ```
-java -jar build/Klean-arch-sample-${version}.jar
+java -jar build/klean-arch-sample-${version}.jar
 ```
 * running the application (on the fly):
 ```

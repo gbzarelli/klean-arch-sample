@@ -4,54 +4,96 @@ version '0.0.1'
 description = "Clean Architecture with Kotlin and Gradle"
 
 buildscript {
-    ext.kotlin_version = '1.3.41'
+    ext.artifactId = 'klean-arch'
+    ext.archive_extension = 'jar'
+    ext.archive_file_name = "${artifactId}.${archive_extension}"
+
+    ext.kotlin_version = '1.3.50'
+    ext.jacoco_palantir_version = '0.4.0'
 
     repositories {
-        mavenCentral()
-        mavenLocal()
+        jcenter()
     }
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.palantir:jacoco-coverage:$jacoco_palantir_version"
     }
+}
+
+apply plugin: 'jacoco'
+apply plugin: 'com.palantir.jacoco-full-report'
+
+allprojects {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        jcenter()
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.3"
 }
 
 subprojects {
     ext {
         versions = [
-                junit  : "5.5.1",
-                assertj: "3.11.1",
-                spring : "2.1.7.RELEASE"
+                junit         : "5.2.0",
+                assertj       : "3.11.1",
+                spring        : "2.1.7.RELEASE",
+                swaplog       : "0.1.5",
+                mysql         : "5.1.46",
+                h2            : '1.4.199',
+                flyway        : '5.2.4',
+                jackson_kotlin: '2.9.7',
+                swagger       : '2.9.2',
+                mockk         : '1.9',
         ]
 
         libs = [
-                unit_test: [
-                        "org.assertj:assertj-core:${versions.assertj}",
-                        "org.junit.jupiter:junit-jupiter:${versions.junit}",
-                        "org.junit.jupiter:junit-jupiter-params:${versions.junit}",
-                        "org.junit.jupiter:junit-jupiter-engine:${versions.junit}"
+                spring_test  : [
+                        "org.springframework.boot:spring-boot-starter-test:${versions.spring}",
                 ],
-                log      : [
+                unit_test    : [
+                        "org.junit.jupiter:junit-jupiter-api:${versions.junit}",
+                        "org.junit.jupiter:junit-jupiter-params:${versions.junit}",
+                        "org.junit.jupiter:junit-jupiter-engine:${versions.junit}",
+                        "io.mockk:mockk:${versions.mockk}",
+                ],
+                log          : [
                         "org.springframework.boot:spring-boot-starter-logging:${versions.spring}"
                 ],
-                spring   : [
-                        "org.springframework.boot:spring-boot-starter:${versions.spring}",
-                ],
-                rest     : [
+                spring_config: [
                         "org.springframework.boot:spring-boot-starter-web:${versions.spring}",
+                        "com.fasterxml.jackson.module:jackson-module-kotlin:${versions.jackson_kotlin}",
+                        "org.springframework.boot:spring-boot-configuration-processor:${versions.spring}",
+                        "io.springfox:springfox-swagger2:${versions.swagger}",
                 ],
-                database : [
-                        "org.springframework.boot:spring-boot-starter-data-jpa:${versions.spring}"
-                ]
+                cacheable    : [
+                        "org.springframework.boot:spring-boot-starter-cache:${versions.spring}",
+                        "com.github.ben-manes.caffeine:caffeine:2.8.0",
+                        "com.github.ben-manes.caffeine:guava:2.8.0",
+                        "com.github.ben-manes.caffeine:jcache:2.8.0",
+                ],
+                rest         : [
+                        "org.springframework.boot:spring-boot-starter-web:${versions.spring}",
+                        "io.springfox:springfox-swagger-ui:${versions.swagger}",
+                ],
+                database     : [
+                        "org.springframework.boot:spring-boot-starter-data-jpa:${versions.spring}",
+                        "com.h2database:h2:${versions.h2}",
+                        "org.flywaydb:flyway-core:${versions.flyway}",
+                ],
         ]
     }
 }
 
 configure(allprojects - project(":application")) {
-
-    apply plugin: 'java'
+    apply plugin: "java"
     apply plugin: "kotlin"
     apply plugin: "org.jetbrains.kotlin.jvm"
+    apply plugin: 'jacoco'
 
     compileKotlin {
         kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
@@ -62,8 +104,32 @@ configure(allprojects - project(":application")) {
         kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
         kotlinOptions.javaParameters = true
     }
+    test {
+        useJUnitPlatform() {
+            excludeTags("integration")
+        }
+    }
+
+    task integrationTest(type: Test) {
+        group = "verification"
+        useJUnitPlatform() {
+            includeTags("integration")
+        }
+        check.dependsOn it
+        shouldRunAfter test
+    }
 
     dependencies {
         compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+        compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     }
+}
+
+task jacocoMergeTest(type: JacocoMerge) {
+    destinationFile = file("$buildDir/jacoco/all-test.exec")
+    executionData = project.fileTree(dir: '.', include: '**/build/jacoco/test.exec')
+}
+
+wrapper {
+    gradleVersion = '5.5.1'
 }
