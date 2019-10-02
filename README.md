@@ -5,26 +5,59 @@ Using `Kotlin` and `Gradle` to build
 
 # IN DEVELOPMENT...
 
+## Technologies
+
+* Language: [`Kotlin`](https://kotlinlang.org) 
+* Compilation: [`Gradle`](https://gradle.org)
+* Framework: [`Spring Boot`](https://spring.io/projects/spring-boot)
+* Cache: [`Caffeine`](https://github.com/ben-manes/caffeine)
+* Banco de dados: [`H2`](h2database.com) / [`MySQL`](https://www.mysql.com) / [`Flyway`](https://flywaydb.org)
+* Documentation: [`Swagger`](https://swagger.io)
+* Tests: 
+    * Test unit [`jUnit5`](https://junit.org/junit5/docs/current/user-guide/) 
+    * Mocks [`Mockk`](https://mockk.io)
+    * Coverage [`Jacoco`](https://www.jacoco.org)
+
 ## Building and Running the application
-* building the application:
+
+* Building the application:
 ```
 ./gradlew clean build
 ```
-* running the application (from the jar, after having built it):
+* Tests
+
+    - All tests:
+    ```
+        ./gradlew check
+    ```
+    - Unit tests:
+    ```
+        ./gradlew test
+    ```
+    - Integration tests ( marked with `@Tag("integration")` )
+    ```
+        ./gradlew integrationTest
+    ```
+    - To generate jacoco reports after `test` (output: build/reports/jacoco/jacocoFullReport)
+    ```
+        ./gradlew jacocoFullReport
+    ```
+
+* Running the application (from the jar, after having built it):
 ```
-java -jar build/klean-arch-sample-${version}.jar
+    java -jar build/klean-arch.jar
 ```
-* running the application (on the fly):
+* Running the application (on the fly):
 ```
-./gradlew bootRun
+    ./gradlew bootRun
 ```
-* running the application (in the IDE): open and run the main class
+* Running the application (in the IDE): open and run the main class ( Configuration module )
 ```
-br.com.helpdev.kleanarch.Application
+    br.com.helpdev.kleanarch.Application
 ```
-* more info on available tasks:
+* More info on available tasks:
 ```
-./gradlew tasks
+    ./gradlew tasks
 ```
 
 ## Resources

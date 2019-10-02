@@ -23,6 +23,7 @@ open class UserRepository(private val jpa: UserJpaRepository) : UserCreator, Use
         key = "{#name.getFullName(), #age.get()}",
         unless = "#result==null"
     )
+
     override fun getByNameAndAge(name: Name, age: Age): User? {
         return get(name.getFirstName(), name.getLastName(), age.get())?.toUser()
     }
