@@ -1,4 +1,4 @@
-package br.com.helpdev.kleanarch.entrypoint.user.dto
+package br.com.helpdev.kleanarch.core.usecase.user.dto
 
 data class RegisterUserResponseDTO(
     val id: Int?,
@@ -7,7 +7,10 @@ data class RegisterUserResponseDTO(
 
     companion object {
         fun withError(notifiable: Set<String>): RegisterUserResponseDTO {
-            return RegisterUserResponseDTO(null, notifiable)
+            return RegisterUserResponseDTO(
+                null,
+                notifiable
+            )
         }
     }
 

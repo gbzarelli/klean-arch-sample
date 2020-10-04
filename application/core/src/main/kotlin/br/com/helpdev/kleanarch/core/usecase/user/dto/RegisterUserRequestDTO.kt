@@ -1,4 +1,4 @@
-package br.com.helpdev.kleanarch.entrypoint.user.dto
+package br.com.helpdev.kleanarch.core.usecase.user.dto
 
 
 data class RegisterUserRequestDTO(

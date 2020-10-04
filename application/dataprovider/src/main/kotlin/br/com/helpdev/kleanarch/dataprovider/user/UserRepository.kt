@@ -3,7 +3,7 @@ package br.com.helpdev.kleanarch.dataprovider.user
 import br.com.helpdev.kleanarch.core.entity.user.User
 import br.com.helpdev.kleanarch.core.entity.user.vo.Age
 import br.com.helpdev.kleanarch.core.entity.user.vo.Name
-import br.com.helpdev.kleanarch.core.usecase.user.UserCreateCommand
+import br.com.helpdev.kleanarch.core.entity.user.UserCreateCommand
 import br.com.helpdev.kleanarch.core.usecase.user.impl.UserCreator
 import br.com.helpdev.kleanarch.core.usecase.user.impl.UserGetter
 import br.com.helpdev.kleanarch.dataprovider.user.entity.UserEntity

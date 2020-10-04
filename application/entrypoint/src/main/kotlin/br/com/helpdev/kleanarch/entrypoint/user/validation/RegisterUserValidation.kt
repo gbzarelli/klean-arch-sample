@@ -1,6 +1,6 @@
 package br.com.helpdev.kleanarch.entrypoint.user.validation
 
-import br.com.helpdev.kleanarch.entrypoint.user.dto.RegisterUserRequestDTO
+import br.com.helpdev.kleanarch.core.usecase.user.dto.RegisterUserRequestDTO
 
 const val NAME_CANT_BE_BLANK = "O NOME NÃO PODE SER EM BRANCO"
 const val LAST_NAME_CANT_BE_BLANK = "O SOBRENOME NÃO PODE SER EM BRANCO"

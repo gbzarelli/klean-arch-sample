@@ -4,7 +4,7 @@ import br.com.helpdev.kleanarch.core.entity.user.User
 import br.com.helpdev.kleanarch.core.entity.user.vo.Age
 import br.com.helpdev.kleanarch.core.entity.user.vo.Name
 import br.com.helpdev.kleanarch.core.entity.user.vo.UserID
-import br.com.helpdev.kleanarch.core.usecase.user.UserCreateCommand
+import br.com.helpdev.kleanarch.core.entity.user.UserCreateCommand
 import br.com.helpdev.kleanarch.dataprovider.user.entity.UserEntity
 
 fun UserCreateCommand.toEntity() = UserEntity(null, name.getFirstName(), name.getLastName(), age.get())
